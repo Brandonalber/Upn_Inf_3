@@ -1,0 +1,214 @@
+// PIC16F877A Configuration Bit Settings
+
+// 'C' source line config statements
+
+// CONFIG
+#pragma config FOSC = XT        // Oscillator Selection bits (XT oscillator)
+#pragma config WDTE = OFF       // Watchdog Timer Enable bit (WDT disabled)
+#pragma config PWRTE = OFF      // Power-up Timer Enable bit (PWRT disabled)
+#pragma config BOREN = OFF      // Brown-out Reset Enable bit (BOR disabled)
+#pragma config LVP = OFF        // Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit (RB3 is digital I/O, HV on MCLR must be used for programming)
+#pragma config CPD = OFF        // Data EEPROM Memory Code Protection bit (Data EEPROM code protection off)
+#pragma config WRT = OFF        // Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
+#pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
+
+// #pragma config statements should precede project file includes.
+// Use project enums instead of #define for ON and OFF.
+
+#include <xc.h>
+#define _XTAL_FREQ 4000000
+#define entrada RA0
+#define entrada2 RE0
+#define led RE1
+int X;
+
+void contar ();
+void contar2 ();
+
+void pulsador ();
+int DISPLAY[47]={1,2,3,4,5,6,7,8,9,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x18,0x19,0x20,0x21,0x22,0x23,0x24,0x26,0x28,0x30,0x31,0x32,0x32,0x34,0x36,0x38,0x39,0x40,0x41,0x42,0x44,0x45,0x46,0x48,0x50,0x52,0x54,0x56,0x58,0x59,0x60};
+unsigned char i=0;
+int DISPLAY2[47]={1,2,3,4,5,6,7,8,9,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x18,0x19,0x20,0x21,0x22,0x23,0x24,0x26,0x28,0x30,0x31,0x32,0x32,0x34,0x36,0x38,0x39,0x40,0x41,0x42,0x44,0x45,0x46,0x48,0x50,0x52,0x54,0x56,0x58,0x59,0x60};
+unsigned char j=0;
+
+
+
+
+void pulsador (){
+
+    if(entrada2==1)
+    {
+        PORTC=0x00;
+        PORTD=0x00;
+    }
+    
+}
+
+void contar2(){
+
+     if (PORTC==0x60)
+         
+     { for(j=0;j<=47;j++){
+     __delay_ms(500);
+      PORTD=DISPLAY2[j];  
+     __delay_ms(500);
+     
+           }
+   
+     }
+    
+}
+
+void contar (){
+
+      
+ if(PORTB>=0X80){
+           
+           for(i=0;i<=47;i++){
+     __delay_ms(500);
+      PORTC=DISPLAY[i];  
+     __delay_ms(500);
+     
+
+           }
+          
+        }
+ 
+  
+    }
+
+
+    
+
+void main(void) {
+    
+    TRISC=0x00;
+    PORTC=0x00;  
+    
+    TRISD=0x00;
+    PORTD=0x00;
+    
+    TRISE=0;
+    PORTE=0;  
+    
+    TRISB=0;
+    ADCON0=0b01000000;
+    ADCON1=0b10000100;
+
+    while(1){
+           
+        ADCON0bits.ADON=1;
+        __delay_us(30);
+        ADCON0bits.GO=1;
+        while(ADCON0bits.GO==1);
+        ADCON0bits.ADON=0;
+        X = (ADRESL/2);
+        PORTB = X;
+       
+      if(X==10){PORTB=16;}
+        if(X==11){PORTB=17;}
+        if(X==12){PORTB=18;}
+        if(X==13){PORTB=19;}
+        if(X==14){PORTB=20;}
+        if(X==15){PORTB=21;}
+        if(X==16){PORTB=22;}
+        if(X==17){PORTB=23;}
+        if(X==18){PORTB=24;}
+        if(X==19){PORTB=25;}
+        if(X==20){PORTB=32;}
+        if(X==21){PORTB=33;}
+        if(X==22){PORTB=34;}
+        if(X==23){PORTB=35;}
+        if(X==24){PORTB=36;}
+        if(X==25){PORTB=37;}
+        if(X==26){PORTB=38;}
+        if(X==27){PORTB=39;}
+        if(X==28){PORTB=40;}
+        if(X==29){PORTB=41;}
+        if(X==30){PORTB=48;}
+        if(X==31){PORTB=49;}
+        if(X==32){PORTB=50;}
+        if(X==33){PORTB=51;}
+        if(X==34){PORTB=52;}
+        if(X==35){PORTB=53;}
+        if(X==36){PORTB=54;}
+        if(X==37){PORTB=55;}
+        if(X==38){PORTB=56;}
+        if(X==39){PORTB=57;}
+        if(X==40){PORTB=64;}
+        if(X==41){PORTB=65;}
+        if(X==42){PORTB=66;}
+        if(X==43){PORTB=67;}
+        if(X==44){PORTB=68;}
+        if(X==45){PORTB=69;}
+        if(X==46){PORTB=70;}
+        if(X==47){PORTB=71;}
+        if(X==48){PORTB=72;}
+        if(X==49){PORTB=73;}
+        if(X==50){PORTB=80;}
+        if(X==51){PORTB=81;}
+        if(X==52){PORTB=82;}
+        if(X==53){PORTB=83;}
+        if(X==54){PORTB=84;}
+        if(X==55){PORTB=85;}
+        if(X==56){PORTB=86;}
+        if(X==57){PORTB=87;}
+        if(X==58){PORTB=88;}
+        if(X==59){PORTB=89;}
+        if(X==60){PORTB=96;}
+        if(X==61){PORTB=97;}
+        if(X==62){PORTB=98;}
+        if(X==63){PORTB=99;}
+        if(X==64){PORTB=100;}
+        if(X==65){PORTB=101;}
+        if(X==66){PORTB=102;}
+        if(X==67){PORTB=103;}
+        if(X==68){PORTB=104;}
+        if(X==69){PORTB=105;}
+        if(X==70){PORTB=112;}
+        if(X==71){PORTB=113;}
+        if(X==72){PORTB=114;}
+        if(X==73){PORTB=115;}
+        if(X==74){PORTB=116;}
+        if(X==75){PORTB=117;}
+        if(X==76){PORTB=118;}
+        if(X==77){PORTB=119;}
+        if(X==78){PORTB=120;}
+        if(X==79){PORTB=121;}
+        if(X==80){PORTB=0x80;}
+        if(X==81){PORTB=0x81;}
+        if(X==82){PORTB=0x82;}
+        if(X==83){PORTB=0x83;}
+        if(X==84){PORTB=0x84;}
+        if(X==85){PORTB=0x85;}
+        if(X==86){PORTB=0x86;}
+        if(X==87){PORTB=0x87;}
+        if(X==88){PORTB=0x88;}
+        if(X==89){PORTB=0x89;}
+        if(X==90){PORTB=0x90;}
+        if(X==91){PORTB=0x91;}
+        if(X==92){PORTB=0x92;}
+        if(X==93){PORTB=0x93;}
+        if(X==94){PORTB=0x94;}
+        if(X==95){PORTB=0x95;}
+        if(X==96){PORTB=0x96;}
+        if(X==97){PORTB=0x97;}
+        if(X==98){PORTB=0x98;}
+        if(X==99){PORTB=0x99;}
+        __delay_ms(200);
+       pulsador ();
+         contar();
+   
+     led=1;
+        __delay_ms(300);
+        led=0;
+        __delay_ms(300); 
+      
+}
+
+}
+
+
+    
+
+
